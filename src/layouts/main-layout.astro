@@ -1,3 +1,8 @@
+---
+import Nav from "../components/Nav.astro";
+const { title } = Astro.props;
+---
+
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -14,9 +19,10 @@
       name="generator"
       content={Astro.generator}
     />
-    <title>Pluginator</title>
+    <title>{title}</title>
   </head>
   <body>
+    <Nav />
     <slot />
   </body>
 </html>

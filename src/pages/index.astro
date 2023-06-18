@@ -1,8 +1,26 @@
 ---
-import Nav from "./components/Nav";
+import MainLayout from "../layouts/main-layout.astro";
 ---
 
-<Nav />
-<h1>Welcome</h1>
-<h2>to julus.gay minecraft</h2>
-<h3>plugins/mods manager</h3>
+<MainLayout title="Pluginator">
+  <main class="p-4">
+    <h1 class="text-accent text-2xl">Welcome</h1>
+    <h2 class="text-lg">
+      to <span class="text-accent">julus.gay</span> minecraft server
+    </h2>
+    <h3>
+      <a
+        href="plugins"
+        class="text-secondary link-hover"
+        >plugins</a
+      >
+      <span class="font-black">/</span>
+      <a
+        class="text-accent link-hover"
+        href="mods"
+        >mods</a
+      >
+      manager
+    </h3>
+  </main>
+</MainLayout>
