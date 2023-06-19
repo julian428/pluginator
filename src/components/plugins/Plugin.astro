@@ -1,0 +1,56 @@
+---
+import PocketBase from "pocketbase";
+const { plugin } = Astro.props;
+const pb = new PocketBase("http://127.0.0.1:8090");
+let suggested_by = "";
+let approved_by = "";
+try {
+  const user1 = await pb.collection("user").getOne(plugin.suggested_by);
+  suggested_by = user1.username;
+  if (plugin.suggested_by === plugin.approved_by) {
+    approved_by = suggested_by;
+  } else {
+    const user2 = await pb.collection("user").getOne(plugin.approved_by);
+    approved_by = user2.username;
+  }
+} catch (error) {
+  approved_by = "error";
+  suggested_by = "error";
+}
+---
+
+<li
+  tabindex={0}
+  class="w-full bg-neutral px-4 rounded-2xl collapse hover:bg-opacity-80 transition-all"
+>
+  <article class="flex justify-between items-center p-0 collapse-title">
+    <h2 class="text-lg text-accent">{plugin.title}</h2>
+    <aside class="flex items-center gap-4">
+      <a
+        href={plugin.website}
+        target="_blank"
+      >
+        🌐
+      </a>
+      <a
+        href={plugin.link}
+        class="btn btn-circle btn-secondary btn-xs"
+      >
+        &darr;
+      </a>
+    </aside>
+  </article>
+  <footer class="collapse-content p-0 flex items-end justify-between">
+    <aside>
+      <ul>
+        <li>📨 {suggested_by}</li>
+        <li>👌 {approved_by}</li>
+      </ul>
+    </aside>
+    <aside>
+      {new Date(plugin.created).getDate()}.{
+        new Date(plugin.created).getMonth() + 1
+      }.{new Date(plugin.created).getFullYear()}
+    </aside>
+  </footer>
+</li>
