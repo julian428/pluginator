@@ -7,7 +7,7 @@ const pb = new PocketBase("http://127.0.0.1:8090");
 let games;
 
 try {
-  const res = await pb.collection("game").getList(1, 3);
+  const res = await pb.collection("game").getList();
   games = res.items;
 } catch (error) {
   console.error(error);
@@ -15,13 +15,20 @@ try {
 ---
 
 <MainLayout title="Games | Pluginator">
-  <main>
-    <header class="flex p-4 gap-2 items-center justify-center">
-      <h1 class="text-center md:text-4xl text-2xl">Available games</h1>
-      <button class="text-4xl text-secondary">+</button>
-    </header>
-    <article class="md:w-11/12 p-4">
-      {games && games.map((game) => <Mobile game={game} />)}
-    </article>
-  </main>
+  <header class="flex p-4 gap-2 items-center justify-center">
+    <h1 class="text-center md:text-4xl text-2xl">Available games</h1>
+    <div
+      class="tooltip tooltip-secondary"
+      data-tip="propose a game"
+    >
+      <a
+        class="text-4xl text-secondary"
+        href="/report?t=game proposal"
+        >+</a
+      >
+    </div>
+  </header>
+  <article class="md:w-11/12 p-4 mx-auto">
+    {games && games.map((game) => <Mobile game={game} />)}
+  </article>
 </MainLayout>

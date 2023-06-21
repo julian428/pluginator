@@ -1,18 +1,40 @@
 ---
 import PocketBase from "pocketbase";
 const { game } = Astro.props;
-let addons;
+let addons = [];
 
 try {
   const pb = new PocketBase("http://127.0.0.1:8090");
-} catch (error) {}
+  const res = await pb.collection("addon").getList(1, 6, {
+    filter: `game_id = "${game.id}"`,
+  });
+  addons = res.items;
+} catch (error) {
+  console.log(error);
+}
 ---
 
-<section class="bg-accent rounded-xl p-4">
+<section class="bg-accent rounded-xl p-4 flex justify-between">
   <aside>
-    <header class="bg-neutral w-fit px-4 py-2 rounded-xl font-bold">
+    <header class="w-fit font-bold text-base-100 text-2xl">
       <h2>{game.title}</h2>
     </header>
-    <div class="bg-primary"></div>
+    <div class="w-fit font-bold">
+      addons: {addons.length}
+    </div>
+    <div class="w-fit font-bold">
+      players: {}
+    </div>
+    <div class="opacity-50">
+      added:<br />{new Date(game.created).toDateString()}
+    </div>
+  </aside>
+  <aside class="flex flex-col items-end justify-between">
+    <div class="btn btn-circle bg-secondary text-base-100">P</div>
+    <a
+      href=`/game/${game.id}`
+      class="link-hover link-secondary"
+      >addons &rarr;</a
+    >
   </aside>
 </section>

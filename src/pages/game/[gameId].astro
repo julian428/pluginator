@@ -1,0 +1,58 @@
+---
+import MainLayout from "../../layouts/main-layout.astro";
+import PocketBase from "pocketbase";
+import Addon from "../../components/addon/index.astro";
+const { gameId } = Astro.params;
+
+let game: { [index: string]: string } = {};
+let addons;
+
+if (!gameId) return;
+
+const pb = new PocketBase("http://127.0.0.1:8090");
+
+try {
+  const res = await pb.collection("game").getOne(gameId);
+  game = res;
+} catch (error) {
+  console.log(error);
+}
+
+try {
+  const res = await pb.collection("addon").getList(1, 200, {
+    filter: `game_id = "${game.id}"`,
+    sort: "-created",
+    expand: "suggested_by,approved_by",
+  });
+  addons = res.items;
+} catch (error) {
+  console.log(error);
+}
+---
+
+<MainLayout title={`${game.title} | addons`}>
+  <header class="flex p-4 gap-2 items-center justify-center">
+    <h1 class="text-center md:text-4xl text-2xl">{game.title} addons</h1>
+    <div
+      class="tooltip tooltip-secondary"
+      data-tip="propose an addon"
+    >
+      <a
+        class="text-4xl text-secondary"
+        href={`/report?t=addon proposal&game=${game.id}`}
+        >+</a
+      >
+    </div>
+  </header>
+  <article class="md:w-11/12 p-4 mx-auto">
+    {
+      addons &&
+        addons.map((addon) => (
+          <Addon
+            addon={addon}
+            game={gameId}
+          />
+        ))
+    }
+  </article>
+</MainLayout>

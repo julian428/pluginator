@@ -1,0 +1,52 @@
+---
+const { addon, game } = Astro.props;
+console.log(addon);
+---
+
+<div
+  tabindex={0}
+  class="collapse bg-accent"
+>
+  <input
+    type="radio"
+    name="addon"
+    checked="checked"
+  />
+  <div
+    class="collapse-title text-xl font-medium flex justify-between pr-4 items-center"
+  >
+    <h2 class="text-primary">{addon.title}</h2>
+    <aside class="flex items-center gap-2">
+      <a
+        href={addon.website}
+        target="_blank"
+        class="z-10"
+        >🌐</a
+      >
+      <a
+        href={addon.download}
+        class="btn btn-circle btn-sm btn-secondary z-10"
+        >&darr;</a
+      >
+    </aside>
+  </div>
+  <div class="collapse-content text-xs text-primary flex justify-between">
+    <aside class="opacity-50">
+      suggested by: <br />
+      {addon.expand.suggested_by.username}
+      <br />
+      approved by: <br />
+      {addon.expand.approved_by.username}
+    </aside>
+    <aside class="flex flex-col items-end justify-between">
+      <a
+        class="btn btn-sm btn-error"
+        href={`/report?t=addon error&game=${game}&addon=${addon.id}`}
+        >report</a
+      >
+      <div class="opacity-50">
+        added: {new Date(addon.created).toDateString()}
+      </div>
+    </aside>
+  </div>
+</div>
