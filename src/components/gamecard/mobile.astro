@@ -1,0 +1,18 @@
+---
+import PocketBase from "pocketbase";
+const { game } = Astro.props;
+let addons;
+
+try {
+  const pb = new PocketBase("http://127.0.0.1:8090");
+} catch (error) {}
+---
+
+<section class="bg-accent rounded-xl p-4">
+  <aside>
+    <header class="bg-neutral w-fit px-4 py-2 rounded-xl font-bold">
+      <h2>{game.title}</h2>
+    </header>
+    <div class="bg-primary"></div>
+  </aside>
+</section>

@@ -1,3 +1,7 @@
+---
+import Login from "./login";
+---
+
 <nav class="bg-neutral navbar">
   <div class="flex-1">
     <a
@@ -19,11 +23,9 @@
       href="/report"
       >report</a
     >
-    <a
-      class="btn btn-ghost normal-case text-xl md:flex hidden"
-      href="/login"
-      >login</a
-    >
+    <div class="btn btn-ghost normal-case text-xl md:flex hidden">
+      <Login client:load />
+    </div>
     <div class="dropdown dropdown-end md:hidden">
       <label
         tabindex={0}
@@ -36,7 +38,7 @@
         class="mt-3 p-2 shadow menu menu-sm dropdown-content bg-neutral rounded-box w-36"
       >
         <li><a href="/report">report</a></li>
-        <li><a href="/login">login</a></li>
+        <li><Login client:load /></li>
       </ul>
     </div>
   </div>
