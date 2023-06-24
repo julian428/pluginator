@@ -1,0 +1,31 @@
+---
+import MainLayout from "../layouts/main-layout.astro";
+import MultiForm from "../components/report/multi-form";
+import PocketBase from "pocketbase";
+const { searchParams } = Astro.url;
+const params: { [index: string]: string } = {};
+let games: { title: string; id: string }[] = [];
+
+for (const [key, value] of searchParams.entries()) {
+  params[key] = value;
+}
+
+const pb = new PocketBase("http://127.0.0.1:8090");
+try {
+  const res = await pb.collection("game").getList();
+  games = res.items.map((game) => ({ title: game.title, id: game.id }));
+} catch (error) {
+  console.log(error);
+}
+---
+
+<MainLayout title="Report | Pluginator">
+  <h1 class="text-center text-2xl p-4">Report</h1>
+  <article class="md:w-11/12 p-4">
+    <MultiForm
+      client:load
+      searchParams={params}
+      games={games}
+    />
+  </article>
+</MainLayout>
