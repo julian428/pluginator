@@ -125,9 +125,20 @@ export default function multiForm({ searchParams, games }: Props) {
 
   return (
     <>
-      {/* {formStatus() && (
-        <div class={`absolute alert alert-${formStatus()}`}>test</div>
-      )} */}
+      {formStatus() &&
+        (formStatus() === "success" ? (
+          <div class="bg-success absolute text-base-100 top-28 left-1/2 -translate-x-1/2 px-4 py-2 rounded-xl text-sm">
+            success
+          </div>
+        ) : formStatus() === "loading" ? (
+          <div class="bg-info absolute top-28 left-1/2 -translate-x-1/2 px-4 py-2 rounded-xl text-sm">
+            loading...
+          </div>
+        ) : (
+          <div class="bg-error absolute top-28 left-1/2 -translate-x-1/2 px-4 py-2 rounded-xl text-sm">
+            something went wrong
+          </div>
+        ))}
       <form onSubmit={sendReport}>
         <section
           style={{ display: formPage() === 0 ? "flex" : "none" }}

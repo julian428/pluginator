@@ -22,15 +22,11 @@ try {
     <div class="w-fit font-bold">
       addons: {addons.length}
     </div>
-    <div class="w-fit font-bold">
-      players: {}
-    </div>
     <div class="opacity-50">
       added:<br />{new Date(game.created).toDateString()}
     </div>
   </aside>
-  <aside class="flex flex-col items-end justify-between">
-    <div class="btn btn-circle bg-secondary text-base-100">P</div>
+  <aside class="flex flex-col items-end justify-end">
     <a
       href=`/game/${game.id}`
       class="link-hover link-secondary"
